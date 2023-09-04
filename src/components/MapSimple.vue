@@ -39,11 +39,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
-import { arr1to2 } from "../utils/index.js";
 import { cloneDeep } from "lodash";
+import { arr1to2 } from "../utils/index.js";
 export default {
     name: "MapSimple",
     props: {

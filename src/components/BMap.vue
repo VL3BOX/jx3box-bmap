@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import { getBosses, getBossInfo, getSkills, getSkillInfo, getEffects, getMap } from "@/service/baizhan";
+import { getBosses, getBossInfo, getSkills, getSkillInfo, getEffects, getMap } from "../service/baizhan";
+import { effects as baizhanEffects, skill_costs, skill_types, skill_colors } from "../assets/data/baizhan_effects.js";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { effects as baizhanEffects, skill_costs, skill_types, skill_colors } from "@/assets/data/baizhan_effects.js";
 
 import MapList from "./MapList.vue";
 import MapSimple from "./MapSimple.vue";
