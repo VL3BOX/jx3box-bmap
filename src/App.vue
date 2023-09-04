@@ -1,35 +1,21 @@
 <template>
     <div id="app">
-        <Header></Header>
-        <Breadcrumb name="测试" slug="test" root="/test" :publishEnable="true" :adminEnable="true" :feedbackEnable="true" :crumbEnable="true">
-            <img slot="logo" svg-inline :src="getAppIcon('macro')" />
-        </Breadcrumb>
-        <LeftSidebar>left side</LeftSidebar>
-        <Main :withoutRight="false">
-            <img src="@/assets/img/logo.svg" alt="">
-            <div class="m-main">
-                <router-view />
-            </div>
-            <RightSidebar>right side</RightSidebar>
-            <Footer></Footer>
-        </Main>
+        <BMap mode="simple"></BMap>
     </div>
 </template>
 
 <script>
-import { getAppIcon } from "@jx3box/jx3box-common/js/utils";
+import BMap from "./components/BMap.vue";
 export default {
     name: "App",
+    components: {
+        BMap,
+    },
     props: [],
-    data: function() {
+    data: function () {
         return {};
     },
     computed: {},
-    methods: { getAppIcon },
-    components: {},
+    methods: {},
 };
 </script>
-
-<style lang="less">
-@import "~@/assets/css/app.less";
-</style>
