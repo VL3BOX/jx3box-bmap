@@ -1,7 +1,7 @@
 # 安装
 
 ```
-npm install @jx3box-bmap
+npm install @jx3box/jx3box-bmap
 ```
 
 # 使用

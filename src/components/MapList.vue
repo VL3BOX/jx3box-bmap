@@ -37,12 +37,17 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import { cloneDeep } from "lodash";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
 export default {
     name: "MapList",
+    props: {
+        maps: {
+            type: Array,
+            required: true,
+        },
+    },
     data() {
         return {
             activeIndex: 1,
@@ -50,7 +55,6 @@ export default {
         };
     },
     computed: {
-        ...mapState(["bosses", "effects", "maps", "client"]),
         per() {
             return this.maps.length / this.base;
         },

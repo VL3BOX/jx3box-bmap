@@ -42,13 +42,21 @@
 import { mapState } from "vuex";
 import { iconLink } from "@jx3box/jx3box-common/js/utils";
 import { __Root } from "@jx3box/jx3box-common/data/jx3box.json";
-import { arr1to2 } from "@/utils";
+import { arr1to2 } from "../utils/index.js";
 import { cloneDeep } from "lodash";
 export default {
     name: "MapSimple",
+    props: {
+        maps: {
+            type: Array,
+            required: true,
+        },
+        column: {
+            type: Number,
+            default: 10,
+        },
+    },
     computed: {
-        ...mapState(["bosses", "effects", "maps", "column", "row"]),
-
         list() {
             const data = cloneDeep(this.maps);
             return arr1to2(data, this.column);
