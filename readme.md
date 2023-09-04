@@ -9,7 +9,7 @@ npm install @jx3box-bmap
 ```
 import BMap from '@jx3box/jx3box-map/src/components/BMap.vue
 
-<b-map :mode="mode"></b-map>
+<BMap :mode="mode"></BMap>
 
 // mode: list simple
 // default: all
