@@ -1,5 +1,5 @@
 <template>
-    <div class="m-bmap-simple" :class="isPhone && 'is-phone'">
+    <div class="m-bmap-simple" :class="isPhone && 'is-map-phone'">
         <div class="u-list" v-if="maps.length">
             <div class="u-row" v-for="(item, index) in list" :key="index">
                 <el-tooltip v-for="(floor, cIndex) in item" :key="cIndex" placement="top" popper-class="u-bmap-tooltip">
@@ -55,15 +55,13 @@ export default {
             default: 10,
         },
     },
-    data() {
-        return {
-            isPhone: false,
-        };
-    },
     computed: {
         list() {
             const data = cloneDeep(this.maps);
             return arr1to2(data, this.column);
+        },
+        isPhone() {
+            return document.documentElement.clientWidth <= 768;
         },
     },
     methods: {
@@ -75,12 +73,6 @@ export default {
             }
             window.open(url, "_blank");
         },
-    },
-    mounted() {
-        this.isPhone = document.documentElement.clientWidth <= 768;
-        window.onresize = () => {
-            this.isPhone = document.documentElement.clientWidth <= 768;
-        };
     },
 };
 </script>
@@ -234,39 +226,39 @@ export default {
             }
         }
     }
-    &.is-phone {
-        .u-list {
-            gap: 5px;
+}
+.is-map-phone {
+    .u-list {
+        gap: 5px !important;
+    }
+    .u-row {
+        gap: 5px !important;
+        height: 50px !important;
+        &::after,
+        &::before {
+            .none !important;
         }
-        .u-row {
-            gap: 5px;
-            height: 50px;
+        .u-column {
+            .size(32px, 32px) !important;
+            .u-img {
+                .size(32px, 32px) !important;
+                img {
+                    .size(32px, 32px) !important;
+                }
+            }
             &::after,
             &::before {
                 .none !important;
             }
-            .u-column {
-                .size(32px, 32px);
-                .u-img {
-                    .size(32px, 32px);
-                    img {
-                        .size(32px, 32px);
-                    }
-                }
-                &::after,
-                &::before {
-                    .none !important;
-                }
-            }
-            .u-name {
-                margin-top: -3px;
-                width: 64px;
-                font-size: 20px;
-                transform: scale(0.5);
-            }
-            .u-tag {
-                .none !important;
-            }
+        }
+        .u-name {
+            margin-top: -3px !important;
+            width: 64px !important;
+            font-size: 20px !important;
+            transform: scale(0.5) !important;
+        }
+        .u-tag {
+            .none !important;
         }
     }
 }
