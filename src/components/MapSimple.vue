@@ -130,23 +130,6 @@ export default {
                 overflow:hidden;
                 &:hover{
                     filter:brightness(1.2) saturate(1.2);
-                }
-                .u-coin {
-                    position: absolute;
-                    bottom: 0;
-                    right: -22px;
-                    height: 20px;
-                    width: 94px;
-                    line-height: 20px;
-                    text-align: right;
-                    font-weight: bold;
-                    color: #c00;
-                    background-color: rgba(#000, 0.1);
-                    font-size: 20px;
-                    transform: scale(0.5);
-                    border-radius: 5px;
-                }
-                &:hover {
                     transform: scale(1.1);
                 }
                 .u-effect {
@@ -154,16 +137,6 @@ export default {
                     .pr;top:-2px;
                 }
             }
-            // & > div {
-            //     flex: none;
-            //     display: inline-block;
-            //     width: 50px;
-            //     overflow: hidden;
-            //     text-overflow: ellipsis;
-            //     white-space: nowrap;
-            //     text-align: center;
-            //     font-size: 12px;
-            // }
 
             @mark:9px;
             .u-index {
@@ -174,15 +147,6 @@ export default {
                 margin-left: -@mark/2;
                 .size(@mark);
                 .x;
-
-                // line-height: 20px;
-                // text-align: center;
-                // color: #c6e48b;
-                // font-weight: bold;
-                // background-color: rgba(#000, 0.5);
-                // font-size: 20px;
-                // transform: scale(0.5);
-                // border-radius: 5px;
 
                 &::after{
                     content:'';
