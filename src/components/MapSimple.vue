@@ -1,5 +1,5 @@
 <template>
-    <div class="m-bmap-simple">
+    <div class="m-bmap-simple" :class="isPhone && 'is-phone'">
         <div class="u-list" v-if="maps.length">
             <div class="u-row" v-for="(item, index) in list" :key="index">
                 <el-tooltip v-for="(floor, cIndex) in item" :key="cIndex" placement="top" popper-class="u-bmap-tooltip">
@@ -60,6 +60,9 @@ export default {
             const data = cloneDeep(this.maps);
             return arr1to2(data, this.column);
         },
+        isPhone() {
+            return document.documentElement.clientWidth <= 768;
+        },
     },
     methods: {
         iconLink,
@@ -76,26 +79,38 @@ export default {
 
 <style lang="less">
 .m-bmap-simple {
-    padding: 10px;
+    padding: 10px 0;
     .u-list {
+        margin: 0 auto;
+        position: relative;
         .flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
+        gap: 15px;
     }
     .u-row {
-        height: 80px;
+        position: relative;
         .flex;
-        &:nth-of-type(even) {
-            flex-direction: row-reverse;
-        }
+        gap: 15px;
+        height: 75px;
+
         .u-column {
+            position: relative;
             .flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            .size(80px, 80px);
+            .size(50px, 50px);
             font-size: 12px;
+            &::after {
+                position: absolute;
+                right: -15px;
+                top: calc(50% - 1px);
+                content: "";
+                width: 15px;
+                height: 1px;
+                background-color: #39847b;
+            }
             .u-img {
                 position: relative;
                 .size(50px, 50px);
@@ -126,7 +141,7 @@ export default {
                     line-height: 20px;
                     text-align: right;
                     font-weight: bold;
-                    color: red;
+                    color: #c00;
                     background-color: rgba(#000, 0.1);
                     font-size: 20px;
                     transform: scale(0.5);
@@ -152,8 +167,87 @@ export default {
                     width: 100px;
                     font-size: 20px;
                     transform: scale(0.5);
-                    margin-top: -5px;
-                    color: red;
+                    margin-top: -6px;
+                    color: #c00;
+                }
+            }
+        }
+        &:nth-of-type(even) {
+            flex-direction: row-reverse;
+            &:not(:last-of-type) {
+                &::before {
+                    position: absolute;
+                    content: "";
+                    left: -15px;
+                    top: 25px;
+                    width: 1px;
+                    height: 90px;
+                    background-color: #39847b;
+                }
+                .u-column {
+                    &:last-of-type {
+                        &::before {
+                            position: absolute;
+                            left: -15px;
+                            top: calc(50% - 1px);
+                            content: "";
+                            width: 15px;
+                            height: 1px;
+                            background-color: #39847b;
+                        }
+                    }
+                }
+            }
+        }
+        &:nth-of-type(odd) {
+            &::after {
+                position: absolute;
+                content: "";
+                right: -15px;
+                top: 25px;
+                width: 1px;
+                height: 90px;
+                background-color: #39847b;
+            }
+            &:not(:first-of-type) {
+                .u-column {
+                    &:first-of-type {
+                        &::before {
+                            position: absolute;
+                            left: -15px;
+                            top: calc(50% - 1px);
+                            content: "";
+                            width: 15px;
+                            height: 1px;
+                            background-color: #39847b;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.is-phone {
+        .u-list {
+            gap: 5px;
+        }
+        .u-row {
+            gap: 5px;
+            height: 60px;
+            &::after,
+            &::before {
+                .none !important;
+            }
+            .u-column {
+                .size(33px, 33px);
+                .u-img {
+                    .size(33px, 33px);
+                    img {
+                        .size(33px, 33px);
+                    }
+                }
+                &::after,
+                &::before {
+                    .none !important;
                 }
             }
         }
@@ -178,7 +272,7 @@ export default {
                 font-size: 14px;
             }
             .u-tag {
-                color: red;
+                color: #c00;
             }
         }
     }
