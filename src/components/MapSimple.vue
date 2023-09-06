@@ -26,11 +26,15 @@
                     <div class="u-column">
                         <div class="u-img" @click="toMap(index * column + cIndex + 1)">
                             <img class="u-effect" :src="iconLink(floor.effect.dwIconID)" />
-                            <div class="u-index">{{ index * column + cIndex + 1 }}</div>
-                            <div v-if="floor.effect.reward" class="u-coin">+{{ floor.effect.reward }}</div>
+                        </div>
+                        <div class="u-index">
+                            <span class="u-index-number">{{ index * column + cIndex + 1 }}</span>
                         </div>
                         <div class="u-name">{{ floor.bossName }}</div>
-                        <div class="u-tag" v-if="floor.effect.tags.length">{{ floor.effect.tags[0] }}</div>
+                        <div class="u-gift">
+                            <span class="u-tag" v-if="floor.effect.tags.length">{{ floor.effect.tags[0] }}</span>
+                            <span class="u-coin" v-if="floor.effect.reward">+{{ floor.effect.reward }}</span>
+                        </div>
                     </div>
                 </el-tooltip>
             </div>
@@ -86,13 +90,14 @@ export default {
         .flex;
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 20px;
     }
     .u-row {
         position: relative;
         .flex;
-        gap: 15px;
+        gap: 12px;
         height: 75px;
+        @border-color:#eee;
 
         .u-column {
             position: relative;
@@ -100,37 +105,31 @@ export default {
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            .size(50px, 50px);
+            .w(60px);
             font-size: 12px;
             &::after {
                 position: absolute;
                 right: -15px;
-                top: calc(50% - 1px);
+                top: 16px;
                 content: "";
-                width: 15px;
+                width: 20px;
                 height: 1px;
-                background-color: #39847b;
+                background-color: @border-color;
             }
+
+            @s:32px;
             .u-img {
                 position: relative;
-                .size(50px, 50px);
+                .size(@s);
+                .r(50%);
                 flex: none;
                 cursor: pointer;
                 transition: 0.2s ease-in-out;
-                .u-index {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 20px;
-                    height: 20px;
-                    line-height: 20px;
-                    text-align: center;
-                    color: #c6e48b;
-                    font-weight: bold;
-                    background-color: rgba(#000, 0.5);
-                    font-size: 20px;
-                    transform: scale(0.5);
-                    border-radius: 5px;
+                border:2px solid #d9e0e3;
+                box-shadow:0 0 1px rgba(0,0,0,.1);
+                overflow:hidden;
+                &:hover{
+                    filter:brightness(1.2) saturate(1.2);
                 }
                 .u-coin {
                     position: absolute;
@@ -150,26 +149,84 @@ export default {
                 &:hover {
                     transform: scale(1.1);
                 }
-            }
-            .u-effect {
-                .size(50px, 50px);
-            }
-            & > div {
-                flex: none;
-                display: inline-block;
-                width: 50px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                text-align: center;
-                font-size: 12px;
-                &.u-tag {
-                    width: 100px;
-                    font-size: 20px;
-                    transform: scale(0.5);
-                    margin-top: -6px;
-                    color: #c00;
+                .u-effect {
+                    .size(@s + 4px);
+                    .pr;top:-2px;
                 }
+            }
+            // & > div {
+            //     flex: none;
+            //     display: inline-block;
+            //     width: 50px;
+            //     overflow: hidden;
+            //     text-overflow: ellipsis;
+            //     white-space: nowrap;
+            //     text-align: center;
+            //     font-size: 12px;
+            // }
+
+            @mark:9px;
+            .u-index {
+
+                position: absolute;
+                top: @s - @mark / 2;
+                left: 50%;
+                margin-left: -@mark/2;
+                .size(@mark);
+                .x;
+
+                // line-height: 20px;
+                // text-align: center;
+                // color: #c6e48b;
+                // font-weight: bold;
+                // background-color: rgba(#000, 0.5);
+                // font-size: 20px;
+                // transform: scale(0.5);
+                // border-radius: 5px;
+
+                &::after{
+                    content:'';
+                    .pa;top:0;
+                    .db;
+                    .size(100%);
+                    transform:rotate(45deg);
+                    background-color:#d6ac6d;
+                    box-shadow:1px 1px 0 rgba(0,0,0,.1);
+                }
+
+                .u-index-number{
+                    line-height: @mark;
+                    .pa;left:-@mark - 1px;
+                    .z(5);
+                    .db;
+                    font-size:12px;
+                    transform:scale(0.6);
+                    color:#eee;
+                    .w(@mark*2/0.6);
+                    .x;
+                    .db;
+                }
+            }
+
+            .u-name{
+                .fz(12px);
+                .mt(5px);
+                transform: scale(0.9);
+                white-space:nowrap;
+            }
+
+            .u-gift {
+                width: 160px;
+                font-size: 20px;
+                transform: scale(0.5);
+                margin-top: -5px;
+                color: #900;
+                .x;
+                white-space:nowrap;
+            }
+            .u-coin{
+                .ml(5px);
+                color:orange;
             }
         }
         &:nth-of-type(even) {
@@ -179,21 +236,21 @@ export default {
                     position: absolute;
                     content: "";
                     left: -15px;
-                    top: 25px;
+                    top: 16px;
                     width: 1px;
-                    height: 90px;
-                    background-color: #39847b;
+                    height: 95px;
+                    background-color: @border-color;
                 }
                 .u-column {
                     &:last-of-type {
                         &::before {
                             position: absolute;
                             left: -15px;
-                            top: calc(50% - 1px);
+                            top: 16px;
                             content: "";
                             width: 15px;
                             height: 1px;
-                            background-color: #39847b;
+                            background-color: @border-color;
                         }
                     }
                 }
@@ -204,10 +261,10 @@ export default {
                 position: absolute;
                 content: "";
                 right: -15px;
-                top: 25px;
+                top: 16px;
                 width: 1px;
-                height: 90px;
-                background-color: #39847b;
+                height: 95px;
+                background-color: @border-color;
             }
             &:not(:first-of-type) {
                 .u-column {
@@ -215,11 +272,11 @@ export default {
                         &::before {
                             position: absolute;
                             left: -15px;
-                            top: calc(50% - 1px);
+                            top: 16px;
                             content: "";
                             width: 15px;
                             height: 1px;
-                            background-color: #39847b;
+                            background-color: @border-color;
                         }
                     }
                 }
@@ -264,6 +321,7 @@ export default {
 }
 .u-bmap-tooltip {
     max-width: 200px;
+    background-color:rgba(0,0,0,.8) !important;
     .u-top {
         .flex;
         align-items: flex-start;
@@ -278,15 +336,18 @@ export default {
             justify-content: center;
             gap: 5px;
             .u-name {
-                font-size: 14px;
+                font-size: 13px;
+                .bold;
+                color:#ff0;
             }
             .u-tag {
-                color: #c00;
+                color: orange;
             }
         }
     }
     .u-bottom {
-        margin-top: 5px;
+        .fz(12px,1.5);
+        .mt(10px);
         & > div {
             margin-bottom: 3px;
         }
