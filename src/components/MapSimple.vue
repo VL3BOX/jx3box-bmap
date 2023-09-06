@@ -55,13 +55,15 @@ export default {
             default: 10,
         },
     },
+    data() {
+        return {
+            isPhone: false,
+        };
+    },
     computed: {
         list() {
             const data = cloneDeep(this.maps);
             return arr1to2(data, this.column);
-        },
-        isPhone() {
-            return document.documentElement.clientWidth <= 768;
         },
     },
     methods: {
@@ -73,6 +75,12 @@ export default {
             }
             window.open(url, "_blank");
         },
+    },
+    mounted() {
+        this.isPhone = document.documentElement.clientWidth <= 768;
+        window.onresize = () => {
+            this.isPhone = document.documentElement.clientWidth <= 768;
+        };
     },
 };
 </script>
@@ -232,23 +240,32 @@ export default {
         }
         .u-row {
             gap: 5px;
-            height: 60px;
+            height: 50px;
             &::after,
             &::before {
                 .none !important;
             }
             .u-column {
-                .size(33px, 33px);
+                .size(32px, 32px);
                 .u-img {
-                    .size(33px, 33px);
+                    .size(32px, 32px);
                     img {
-                        .size(33px, 33px);
+                        .size(32px, 32px);
                     }
                 }
                 &::after,
                 &::before {
                     .none !important;
                 }
+            }
+            .u-name {
+                margin-top: -3px;
+                width: 64px;
+                font-size: 20px;
+                transform: scale(0.5);
+            }
+            .u-tag {
+                .none !important;
             }
         }
     }
