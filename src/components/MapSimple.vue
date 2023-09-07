@@ -1,5 +1,5 @@
 <template>
-    <div class="m-bmap-simple" :class="isPhone && 'is-map-phone'">
+    <div class="m-bmap-simple">
         <div class="u-list" v-if="maps.length">
             <div class="u-row" v-for="(item, index) in list" :key="index">
                 <el-tooltip v-for="(floor, cIndex) in item" :key="cIndex" placement="top" popper-class="u-bmap-tooltip">
@@ -23,7 +23,7 @@
                             <div class="u-desc">{{ floor.effect.szDescription }}</div>
                         </div>
                     </div>
-                    <div class="u-column">
+                    <div class="u-column" :class="floor.nEffectID && 'is-effect'">
                         <div class="u-img" @click="toMap(index * column + cIndex + 1)">
                             <img class="u-effect" :src="iconLink(floor.effect.dwIconID)" />
                         </div>
@@ -64,9 +64,6 @@ export default {
             const data = cloneDeep(this.maps);
             return arr1to2(data, this.column);
         },
-        isPhone() {
-            return document.documentElement.clientWidth <= 768;
-        },
     },
     methods: {
         iconLink,
@@ -97,7 +94,7 @@ export default {
         .flex;
         gap: 12px;
         height: 75px;
-        @border-color:#eee;
+        @border-color: #eee;
 
         .u-column {
             position: relative;
@@ -117,7 +114,8 @@ export default {
                 background-color: @border-color;
             }
 
-            @s:32px;
+            @s: 32px;
+            @b: 2px;
             .u-img {
                 position: relative;
                 .size(@s);
@@ -125,58 +123,64 @@ export default {
                 flex: none;
                 cursor: pointer;
                 transition: 0.2s ease-in-out;
-                border:2px solid #d9e0e3;
-                box-shadow:0 0 1px rgba(0,0,0,.1);
-                overflow:hidden;
-                &:hover{
-                    filter:brightness(1.2) saturate(1.2);
+                border: @b solid #d9e0e3;
+                box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                &:hover {
+                    filter: brightness(1.2) saturate(1.2);
                     transform: scale(1.1);
                 }
                 .u-effect {
-                    .size(@s + 4px);
-                    .pr;top:-2px;
+                    .size(@s + @b);
+                    .pr;
+                    top: -@b;
                 }
             }
 
-            @mark:9px;
+            @mark: 16px;
+            // @mark: 8px;
             .u-index {
-
                 position: absolute;
-                top: @s - @mark / 2;
+                top: @s - @b - @mark / 2;
                 left: 50%;
-                margin-left: -@mark/2;
+                margin-left: -@mark / 2;
                 .size(@mark);
                 .x;
 
-                &::after{
-                    content:'';
-                    .pa;top:0;
+                &::after {
+                    content: "";
+                    .pa;
+                    top: 0;
                     .db;
                     .size(100%);
-                    transform:rotate(45deg);
-                    background-color:#d6ac6d;
-                    box-shadow:1px 1px 0 rgba(0,0,0,.1);
+                    transform: rotate(45deg);
+                    // background-color: #d6ac6d;
+                    background-color: #868686;
+                    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
                 }
 
-                .u-index-number{
+                .u-index-number {
                     line-height: @mark;
-                    .pa;left:-@mark - 1px;
+                    .pa;
+                    // left:-@mark - 1px;
+                    left: (-@mark - @b)/2;
                     .z(5);
                     .db;
-                    font-size:12px;
-                    transform:scale(0.6);
-                    color:#eee;
-                    .w(@mark*2/0.6);
+                    font-size: 12px;
+                    color: #eee;
+                    .w((@mark + @b)*2);
+                    // transform:scale(0.6);
+                    // .w(@mark*2/0.6);
                     .x;
                     .db;
                 }
             }
 
-            .u-name{
+            .u-name {
                 .fz(12px);
                 .mt(5px);
                 transform: scale(0.9);
-                white-space:nowrap;
+                white-space: nowrap;
             }
 
             .u-gift {
@@ -186,11 +190,16 @@ export default {
                 margin-top: -5px;
                 color: #900;
                 .x;
-                white-space:nowrap;
+                white-space: nowrap;
             }
-            .u-coin{
+            .u-coin {
                 .ml(5px);
-                color:orange;
+                color: orange;
+            }
+            &.is-effect {
+                .u-index::after {
+                    background-color: #9b7137;
+                }
             }
         }
         &:nth-of-type(even) {
@@ -249,43 +258,46 @@ export default {
     }
 }
 .is-map-phone {
-    .u-list {
-        gap: 5px !important;
-    }
-    .u-row {
-        gap: 5px !important;
-        height: 50px !important;
-        &::after,
-        &::before {
-            .none !important;
+    .m-bmap-simple {
+        .u-list {
+            gap: 15px;
         }
-        .u-column {
-            .size(32px, 32px) !important;
-            .u-img {
-                .size(32px, 32px) !important;
-                img {
-                    .size(32px, 32px) !important;
-                }
-            }
+        .u-row {
+            gap: 8px;
+            height: 45px;
             &::after,
             &::before {
-                .none !important;
+                .none;
             }
-        }
-        .u-name {
-            margin-top: -3px !important;
-            width: 64px !important;
-            font-size: 20px !important;
-            transform: scale(0.5) !important;
-        }
-        .u-tag {
-            .none !important;
+            .u-column {
+                .size(32px, 32px);
+                .u-img {
+                    .size(100%, 100%);
+                    img {
+                        .size(100%, 100%);
+                    }
+                }
+                &::after,
+                &::before {
+                    .none;
+                }
+            }
+            .u-name {
+                margin-top: -2px;
+                font-size: 20px;
+                transform: scale(0.5);
+                text-align: center;
+            }
+            .u-tag,
+            .u-gift {
+                .none;
+            }
         }
     }
 }
 .u-bmap-tooltip {
     max-width: 200px;
-    background-color:rgba(0,0,0,.8) !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
     .u-top {
         .flex;
         align-items: flex-start;
@@ -302,7 +314,7 @@ export default {
             .u-name {
                 font-size: 13px;
                 .bold;
-                color:#ff0;
+                color: #ff0;
             }
             .u-tag {
                 color: orange;

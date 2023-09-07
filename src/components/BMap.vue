@@ -1,5 +1,5 @@
 <template>
-    <div class="m-bmap" v-loading="loading">
+    <div class="m-bmap" :class="isPhone && 'is-map-phone'" v-loading="loading">
         <component :is="currentComponent" :maps="maps" :column="column"></component>
     </div>
 </template>
@@ -55,6 +55,9 @@ export default {
                 componentId = "MapSimple";
             }
             return componentId;
+        },
+        isPhone() {
+            return document.documentElement.clientWidth <= 768;
         },
     },
     methods: {
