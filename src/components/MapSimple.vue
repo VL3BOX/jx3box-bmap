@@ -122,7 +122,7 @@ export default {
                 .none;
                 position: absolute;
                 top: -@b;
-                z-index: -1;
+                z-index: 0;
                 width: @e;
                 height: @e * 0.9;
                 background-color: #9b7137;
@@ -144,6 +144,7 @@ export default {
                 border: @b solid #d9e0e3;
                 box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
                 overflow: hidden;
+                z-index: 1;
                 &:hover {
                     filter: brightness(1.2) saturate(1.2);
                     transform: scale(1.1);
@@ -164,6 +165,7 @@ export default {
                 margin-left: -@mark / 2;
                 .size(@mark);
                 .x;
+                z-index: 2;
 
                 &::after {
                     content: "";
