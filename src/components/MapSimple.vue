@@ -23,7 +23,7 @@
                             <div class="u-desc">{{ floor.effect.szDescription }}</div>
                         </div>
                     </div>
-                    <div class="u-column" :class="floor.nEffectID && 'is-effect'">
+                    <div class="u-column" :class="{ 'is-effect': floor.nEffectID, 'is-elite': !((cIndex + 1) % 10) }">
                         <div class="u-img" @click="toMap(index * column + cIndex + 1)">
                             <img class="u-effect" :src="iconLink(floor.effect.dwIconID)" />
                         </div>
@@ -35,6 +35,7 @@
                             <span class="u-tag" v-if="floor.effect.tags.length">{{ floor.effect.tags[0] }}</span>
                             <span class="u-coin" v-if="floor.effect.reward">+{{ floor.effect.reward }}</span>
                         </div>
+                        <div class="u-elite"></div>
                     </div>
                 </el-tooltip>
             </div>
@@ -116,6 +117,23 @@ export default {
 
             @s: 32px;
             @b: 2px;
+            @e: @s + @b * 6;
+            .u-elite {
+                .none;
+                position: absolute;
+                top: -@b;
+                z-index: -1;
+                width: @e;
+                height: @e * 0.9;
+                background-color: #9b7137;
+                transform: rotate(90deg);
+                clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+            }
+            &.is-elite {
+                .u-elite {
+                    .db;
+                }
+            }
             .u-img {
                 position: relative;
                 .size(@s);
