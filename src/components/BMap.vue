@@ -219,19 +219,19 @@ export default {
                 });
             });
         },
-        loadData() {
+        async loadData() {
             const proArr = [];
 
-            const bossPro = this.loadBosses();
+            const bossPro = await this.loadBosses();
             proArr.push(bossPro);
 
-            const skillPro = this.loadSkills();
+            const skillPro = await this.loadSkills();
             proArr.push(skillPro);
 
-            const effectPro = this.loadEffects();
+            const effectPro = await this.loadEffects();
             proArr.push(effectPro);
             this.loading = true;
-            Promise.allSettled(proArr).then(() => {
+            await Promise.allSettled(proArr).then(() => {
                 this.loadMap();
                 this.loading = false;
             });
