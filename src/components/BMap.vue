@@ -1,27 +1,45 @@
 <template>
     <div class="m-bmap" :class="isPhone && 'is-map-phone'" v-loading="loading">
-        <component :is="currentComponent" :maps="maps" :column="column"></component>
+        <component
+            :is="currentComponent"
+            :maps="maps"
+            :column="column"
+            :row="row"
+            :bosses="bosses"
+            :effects="effects"
+            :effectsFilter="effectsFilter"
+            v-bind="$attrs"
+            v-on="$listeners"
+        ></component>
     </div>
 </template>
 
 <script>
 import { getBosses, getBossInfo, getSkills, getSkillInfo, getEffects, getMap } from "../service/baizhan";
-import { effects as baizhanEffects, skill_costs, skill_types, skill_colors } from "../assets/data/baizhan_effects.js";
+import {
+    effects as baizhanEffects,
+    skill_costs,
+    skill_types,
+    skill_colors,
+    effectsFilter,
+} from "../assets/data/baizhan_effects.js";
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
 
 import MapList from "./MapList.vue";
 import MapSimple from "./MapSimple.vue";
+import MapCompleted from "./Map.vue";
 
 export default {
     name: "BMap",
     components: {
         MapList,
         MapSimple,
+        MapCompleted,
     },
     props: {
         mode: {
             type: String,
-            default: "all",
+            default: "completed",
         },
     },
     data() {
@@ -42,6 +60,7 @@ export default {
             row: 6,
             maps: [],
             map: null,
+            effectsFilter,
         };
     },
     computed: {
@@ -53,6 +72,9 @@ export default {
             }
             if (mode === "simple") {
                 componentId = "MapSimple";
+            }
+            if (mode === "completed") {
+                componentId = "MapCompleted";
             }
             return componentId;
         },

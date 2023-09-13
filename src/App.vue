@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <BMap mode="simple"></BMap>
+        <BMap></BMap>
     </div>
 </template>
 
