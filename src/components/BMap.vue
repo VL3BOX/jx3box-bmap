@@ -8,6 +8,7 @@
             :bosses="bosses"
             :effects="effects"
             :effectsFilter="effectsFilter"
+            :updatedAt="updatedAt"
             v-bind="$attrs"
             v-on="$listeners"
         ></component>
@@ -39,7 +40,7 @@ export default {
     props: {
         mode: {
             type: String,
-            default: "completed",
+            default: "simple",
         },
     },
     data() {
@@ -64,6 +65,9 @@ export default {
         };
     },
     computed: {
+        updatedAt() {
+            return this.map?.updated_at || new Date();
+        },
         currentComponent() {
             let componentId = "MapComplete";
             const mode = this.mode;

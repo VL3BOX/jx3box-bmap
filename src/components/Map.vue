@@ -13,6 +13,7 @@
                     :class="[
                         floor.nEffectID ? 'is-effect' : '',
                         floor.dwBossID === currentBoss.dwBossID ? 'is-info' : '',
+                        getCurrentStyle(floor, stepIndex * $attrs.column + index + 1),
                     ]"
                     v-for="(floor, index) in item"
                     :key="index"
@@ -66,7 +67,7 @@ import html2canvas from "html2canvas";
 import { moment } from "@jx3box/jx3box-common/js/moment";
 export default {
     name: "MapCompleted",
-    props: {},
+    props: ["effectsFilter", "updatedAt"],
     data() {
         return {
             loading: false,
@@ -92,8 +93,45 @@ export default {
         effects() {
             return this.$attrs.effects || [];
         },
+        mapFilterInit() {
+            return this.$attrs.mapFilterInit || "init";
+        },
+        update_moment() {
+            return moment(this.updatedAtt);
+        },
+        duration() {
+            return {
+                start: this.update_moment.startOf("week").format("MM/DD"),
+                end: this.update_moment.endOf("week").format("MM/DD"),
+            };
+        },
     },
     methods: {
+        getCurrentStyle(floor, index) {
+            const indexes = [10, 20, 30, 40, 50, 60];
+            if (this.mapFilterInit === "init") {
+                return indexes.includes(index) || this.effectsFilter[0].ids.includes(floor.nEffectID)
+                    ? "is-current"
+                    : "";
+            } else {
+                if (this.currentBossName && this.currentEffectIds.length) {
+                    return (this.currentBossName === "精英首领"
+                        ? indexes.includes(index)
+                        : this.currentBossName === floor.bossName) && this.currentEffectIds.includes(floor.nEffectID)
+                        ? "is-current"
+                        : "";
+                }
+                return (
+                    (!this.currentBossName && this.currentEffectIds.includes(floor.nEffectID) ? "is-current" : "") ||
+                    (!this.currentEffectIds.length &&
+                    (this.currentBossName === "精英首领"
+                        ? indexes.includes(index)
+                        : this.currentBossName === floor.bossName)
+                        ? "is-current"
+                        : "")
+                );
+            }
+        },
         isPhone,
         getBossAvatar(id) {
             const avatar =
@@ -102,16 +140,14 @@ export default {
         },
         getEffectInfo,
         setBossHandler(i) {
-            console.log(i);
-            // if (i === this.initQuery.index) {
-            //     // this.$store.dispatch("baizhan/setInit", {});
-            //     this.$store.commit("baizhan/setState", {
-            //         key: "currentBoss",
-            //         val: {},
-            //     });
-            //     return this.$router.push({ query: {} });
-            // }
-            // this.$router.push({ query: { floor: i } });
+            if (i === this.initQuery.index) {
+                this.$store.commit("baizhan/setState", {
+                    key: "currentBoss",
+                    val: {},
+                });
+                return this.$router.push({ query: {} });
+            }
+            this.$router.push({ query: { floor: i } });
         },
         setBoss(floor, i) {
             console.log(floor, i);

@@ -12,5 +12,5 @@ import BMap from '@jx3box/jx3box-bmap/src/components/BMap.vue'
 <BMap :mode="mode"></BMap>
 
 // mode: list simple
-// default: completed
+// default: simple
 ```
