@@ -24,11 +24,13 @@
                         </div>
                     </div>
                     <div class="u-column" :class="{ 'is-effect': floor.nEffectID, 'is-elite': !((cIndex + 1) % 10) }">
-                        <div class="u-img" @click="toMap(index * column + cIndex + 1)">
-                            <img class="u-effect" :src="iconLink(floor.effect.dwIconID)" />
-                        </div>
-                        <div class="u-index">
-                            <span class="u-index-number">{{ index * column + cIndex + 1 }}</span>
+                        <div class="u-img-index" @click="toMap(index * column + cIndex + 1)">
+                            <div class="u-img">
+                                <img class="u-effect" :src="iconLink(floor.effect.dwIconID)" />
+                            </div>
+                            <div class="u-index">
+                                <span class="u-index-number">{{ index * column + cIndex + 1 }}</span>
+                            </div>
                         </div>
                         <div class="u-name">{{ floor.bossName }}</div>
                         <div class="u-gift">
@@ -134,6 +136,15 @@ export default {
                     .db;
                 }
             }
+            .u-img-index {
+                cursor: pointer;
+                &:hover {
+                    .u-img {
+                        filter: brightness(1.2) saturate(1.2);
+                        transform: scale(1.1);
+                    }
+                }
+            }
             .u-img {
                 position: relative;
                 .size(@s);
@@ -145,10 +156,6 @@ export default {
                 box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
                 overflow: hidden;
                 z-index: 1;
-                &:hover {
-                    filter: brightness(1.2) saturate(1.2);
-                    transform: scale(1.1);
-                }
                 .u-effect {
                     .size(@s + @b);
                     .pr;
@@ -183,7 +190,7 @@ export default {
                     line-height: @mark;
                     .pa;
                     // left:-@mark - 1px;
-                    left: (-@mark - @b)/2;
+                    left: (-@mark - @b)/2 - 1px;
                     .z(5);
                     .db;
                     font-size: 12px;
