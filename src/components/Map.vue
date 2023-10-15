@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div v-if="getEffectInfo(effects, floor.nEffectID, 'reward')" class="u-coin">
-                                <img class="u-coin-img" src="@/assets/img/coin.svg" svg-inline />
+                                <img class="u-coin-img" src="../assets/img/coin.svg" svg-inline />
                                 <span>{{ getEffectInfo(effects, floor.nEffectID, "reward") }}</span>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
 
 <script>
 import { __imgPath } from "@jx3box/jx3box-common/data/jx3box.json";
-import { arr1to2, isPhone, isQQ, isWeChat, getEffectInfo } from "@/utils";
+import { arr1to2, isPhone, isQQ, isWeChat, getEffectInfo } from "../utils";
 import { cloneDeep } from "lodash";
 import html2canvas from "html2canvas";
 import { moment } from "@jx3box/jx3box-common/js/moment";
@@ -305,6 +305,7 @@ export default {
 </script>
 
 <style lang="less">
+@import "../assets/css/var.less";
 .m-completed-map {
     .flex;
     justify-content: center;

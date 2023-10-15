@@ -45,19 +45,19 @@ export function isQQ() {
 
 export function getEffectInfo(effects, id, type = "icon") {
     const item = effects.find((item) => item.nID === id);
-    const iconId = item?.dwIconID || 18005;
+    const iconId = item.dwIconID || 18005;
     let str = iconLink(iconId);
     if (type === "name") {
-        str = item?.szName;
+        str = item.szName;
     }
     if (type === "desc") {
-        str = item?.szDescription;
+        str = item.szDescription;
     }
     if (type === "reward") {
-        str = item?.reward;
+        str = item.reward;
     }
     if (type === "tags") {
-        str = item?.tags;
+        str = item.tags;
     }
     return str;
 }
