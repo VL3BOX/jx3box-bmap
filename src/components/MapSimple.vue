@@ -287,39 +287,42 @@ export default {
 .is-map-phone {
     .m-bmap-simple {
         .u-list {
-            gap: 15px;
+            align-items: flex-start;
+            overflow-y: hidden;
+            overflow-x: auto;
+            padding: 10px 20px;
         }
-        .u-row {
-            gap: 8px;
-            height: 45px;
-            &::after,
-            &::before {
-                .none;
-            }
-            .u-column {
-                .size(32px, 32px);
-                .u-img {
-                    .size(100%, 100%);
-                    img {
-                        .size(100%, 100%);
-                    }
-                }
-                &::after,
-                &::before {
-                    .none;
-                }
-            }
-            .u-name {
-                margin-top: -2px;
-                font-size: 20px;
-                transform: scale(0.5);
-                text-align: center;
-            }
-            .u-tag,
-            .u-gift {
-                .none;
-            }
-        }
+        // .u-row {
+        //     gap: 8px;
+        //     height: 45px;
+        //     &::after,
+        //     &::before {
+        //         .none;
+        //     }
+        //     .u-column {
+        //         .size(32px, 32px);
+        //         .u-img {
+        //             .size(100%, 100%);
+        //             img {
+        //                 .size(100%, 100%);
+        //             }
+        //         }
+        //         &::after,
+        //         &::before {
+        //             .none;
+        //         }
+        //     }
+        //     .u-name {
+        //         margin-top: -2px;
+        //         font-size: 20px;
+        //         transform: scale(0.5);
+        //         text-align: center;
+        //     }
+        //     .u-tag,
+        //     .u-gift {
+        //         .none;
+        //     }
+        // }
     }
 }
 .u-bmap-tooltip {

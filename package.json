@@ -1,6 +1,6 @@
 {
     "name": "@jx3box/jx3box-bmap",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "description": "JX3BOX Baizhan Map",
     "scripts": {
         "dev": "env DEV_SERVER=true vue-cli-service serve",
@@ -11,8 +11,8 @@
         "update": "npm --registry https://registry.npmjs.org install @jx3box/jx3box-common-ui@latest @jx3box/jx3box-common@latest"
     },
     "dependencies": {
-        "@jx3box/jx3box-common": "^8.0.0",
-        "@jx3box/jx3box-common-ui": "^7.7.9",
+        "@jx3box/jx3box-common": "^8.0.8",
+        "@jx3box/jx3box-common-ui": "^7.9.11",
         "axios": "^0.19.2",
         "element-ui": "^2.15.6",
         "html2canvas": "^1.4.1",
