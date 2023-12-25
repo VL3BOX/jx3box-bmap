@@ -1,6 +1,6 @@
 <template>
     <div class="m-bmap-simple">
-        <div class="u-list" v-if="maps.length">
+        <div class="u-list" :class="list.length % 2 ? 'is-odd' : 'is-even'" v-if="maps.length">
             <div class="u-row" v-for="(item, index) in list" :key="index">
                 <el-tooltip v-for="(floor, cIndex) in item" :key="cIndex" placement="top" popper-class="u-bmap-tooltip">
                     <div class="u-tip" slot="content">
@@ -91,190 +91,246 @@ export default {
         flex-direction: column;
         align-items: center;
         gap: 20px;
-    }
-    .u-row {
-        position: relative;
-        .flex;
-        gap: 12px;
-        height: 75px;
         @border-color: #eee;
 
-        .u-column {
+        .u-row {
             position: relative;
             .flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            .w(60px);
-            font-size: 12px;
-            &::after {
-                position: absolute;
-                right: -15px;
-                top: 16px;
-                content: "";
-                width: 20px;
-                height: 1px;
-                background-color: @border-color;
-            }
+            gap: 12px;
+            height: 75px;
 
-            @s: 32px;
-            @b: 2px;
-            @e: @s + @b * 6;
-            .u-elite {
-                .none;
-                position: absolute;
-                top: -@b;
-                z-index: 0;
-                width: @e;
-                height: @e * 0.9;
-                background-color: #9b7137;
-                transform: rotate(90deg);
-                clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
-            }
-            &.is-elite {
+            .u-column {
+                position: relative;
+                .flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                .w(60px);
+                font-size: 12px;
+
+                @s: 32px;
+                @b: 2px;
+                @e: @s + @b * 6;
                 .u-elite {
-                    .db;
+                    .none;
+                    position: absolute;
+                    top: -@b;
+                    z-index: 0;
+                    width: @e;
+                    height: @e * 0.9;
+                    background-color: #9b7137;
+                    transform: rotate(90deg);
+                    clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
                 }
-            }
-            .u-img-index {
-                cursor: pointer;
-                &:hover {
-                    .u-img {
-                        filter: brightness(1.2) saturate(1.2);
-                        transform: scale(1.1);
+                &.is-elite {
+                    .u-elite {
+                        .db;
+                    }
+                }
+                .u-img-index {
+                    cursor: pointer;
+                    &:hover {
+                        .u-img {
+                            filter: brightness(1.2) saturate(1.2);
+                            transform: scale(1.1);
+                        }
+                    }
+                }
+                .u-img {
+                    position: relative;
+                    .size(@s);
+                    .r(50%);
+                    flex: none;
+                    cursor: pointer;
+                    transition: 0.2s ease-in-out;
+                    border: @b solid #d9e0e3;
+                    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+                    overflow: hidden;
+                    z-index: 1;
+                    .u-effect {
+                        .size(@s + @b);
+                        .pr;
+                        top: -@b;
+                    }
+                }
+
+                @mark: 16px;
+                // @mark: 8px;
+                .u-index {
+                    position: absolute;
+                    top: @s - @b - @mark / 2;
+                    left: 50%;
+                    margin-left: -@mark / 2;
+                    .size(@mark);
+                    .x;
+                    z-index: 2;
+
+                    &::after {
+                        content: "";
+                        .pa;
+                        top: 0;
+                        .db;
+                        .size(100%);
+                        transform: rotate(45deg);
+                        // background-color: #d6ac6d;
+                        background-color: #868686;
+                        box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+                    }
+
+                    .u-index-number {
+                        line-height: @mark;
+                        .pa;
+                        // left:-@mark - 1px;
+                        left: (-@mark - @b)/2 - 1px;
+                        .z(5);
+                        .db;
+                        font-size: 12px;
+                        color: #eee;
+                        .w((@mark + @b)*2);
+                        // transform:scale(0.6);
+                        // .w(@mark*2/0.6);
+                        .x;
+                        .db;
+                    }
+                }
+
+                .u-name {
+                    .fz(12px);
+                    .mt(5px);
+                    transform: scale(0.9);
+                    white-space: nowrap;
+                }
+
+                .u-gift {
+                    width: 160px;
+                    font-size: 20px;
+                    transform: scale(0.5);
+                    margin-top: -5px;
+                    color: #900;
+                    .x;
+                    white-space: nowrap;
+                }
+                .u-coin {
+                    .ml(5px);
+                    color: orange;
+                }
+                &.is-effect {
+                    .u-index::after {
+                        background-color: #9b7137;
                     }
                 }
             }
-            .u-img {
-                position: relative;
-                .size(@s);
-                .r(50%);
-                flex: none;
-                cursor: pointer;
-                transition: 0.2s ease-in-out;
-                border: @b solid #d9e0e3;
-                box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
-                overflow: hidden;
-                z-index: 1;
-                .u-effect {
-                    .size(@s + @b);
-                    .pr;
-                    top: -@b;
+            &:nth-of-type(even) {
+                flex-direction: row-reverse;
+                &:not(:last-of-type) {
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        left: -15px;
+                        top: 16px;
+                        width: 1px;
+                        height: 95px;
+                        background-color: @border-color;
+                    }
+                    &:not(:last-of-type) {
+                        .u-column {
+                            &:last-of-type {
+                                &::before {
+                                    position: absolute;
+                                    left: -15px;
+                                    top: 16px;
+                                    content: "";
+                                    width: 15px;
+                                    height: 1px;
+                                    background-color: @border-color;
+                                }
+                            }
+                            &::after {
+                                position: absolute;
+                                right: -15px;
+                                top: 16px;
+                                content: "";
+                                width: 20px;
+                                height: 1px;
+                                background-color: @border-color;
+                            }
+                        }
+                    }
                 }
             }
-
-            @mark: 16px;
-            // @mark: 8px;
-            .u-index {
-                position: absolute;
-                top: @s - @b - @mark / 2;
-                left: 50%;
-                margin-left: -@mark / 2;
-                .size(@mark);
-                .x;
-                z-index: 2;
-
-                &::after {
-                    content: "";
-                    .pa;
-                    top: 0;
-                    .db;
-                    .size(100%);
-                    transform: rotate(45deg);
-                    // background-color: #d6ac6d;
-                    background-color: #868686;
-                    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
-                }
-
-                .u-index-number {
-                    line-height: @mark;
-                    .pa;
-                    // left:-@mark - 1px;
-                    left: (-@mark - @b)/2 - 1px;
-                    .z(5);
-                    .db;
-                    font-size: 12px;
-                    color: #eee;
-                    .w((@mark + @b)*2);
-                    // transform:scale(0.6);
-                    // .w(@mark*2/0.6);
-                    .x;
-                    .db;
-                }
-            }
-
-            .u-name {
-                .fz(12px);
-                .mt(5px);
-                transform: scale(0.9);
-                white-space: nowrap;
-            }
-
-            .u-gift {
-                width: 160px;
-                font-size: 20px;
-                transform: scale(0.5);
-                margin-top: -5px;
-                color: #900;
-                .x;
-                white-space: nowrap;
-            }
-            .u-coin {
-                .ml(5px);
-                color: orange;
-            }
-            &.is-effect {
-                .u-index::after {
-                    background-color: #9b7137;
-                }
-            }
-        }
-        &:nth-of-type(even) {
-            flex-direction: row-reverse;
-            &:not(:last-of-type) {
-                &::before {
-                    position: absolute;
-                    content: "";
-                    left: -15px;
-                    top: 16px;
-                    width: 1px;
-                    height: 95px;
-                    background-color: @border-color;
-                }
-                .u-column {
-                    &:last-of-type {
-                        &::before {
+            &:nth-of-type(odd) {
+                &:not(:last-of-type) {
+                    &::after {
+                        position: absolute;
+                        content: "";
+                        right: -15px;
+                        top: 16px;
+                        width: 1px;
+                        height: 95px;
+                        background-color: @border-color;
+                    }
+                    .u-column {
+                        &::after {
                             position: absolute;
-                            left: -15px;
+                            right: -15px;
                             top: 16px;
                             content: "";
-                            width: 15px;
+                            width: 20px;
                             height: 1px;
                             background-color: @border-color;
                         }
                     }
                 }
+                &:not(:first-of-type) {
+                    .u-column {
+                        &:first-of-type {
+                            &::before {
+                                position: absolute;
+                                left: -15px;
+                                top: 16px;
+                                content: "";
+                                width: 15px;
+                                height: 1px;
+                                background-color: @border-color;
+                            }
+                        }
+                    }
+                }
             }
         }
-        &:nth-of-type(odd) {
-            &::after {
-                position: absolute;
-                content: "";
-                right: -15px;
-                top: 16px;
-                width: 1px;
-                height: 95px;
-                background-color: @border-color;
+        &.is-odd {
+            // 奇数总行
+            // 最后一行
+            .u-row {
+                &:last-of-type {
+                    .u-column {
+                        &:not(:last-of-type) {
+                            &::after {
+                                position: absolute;
+                                right: -15px;
+                                top: 16px;
+                                content: "";
+                                width: 20px;
+                                height: 1px;
+                                background-color: @border-color;
+                            }
+                        }
+                    }
+                }
             }
-            &:not(:first-of-type) {
-                .u-column {
-                    &:first-of-type {
-                        &::before {
+        }
+        &.is-even {
+            // 偶数总行
+            // 最后一行
+            .u-row {
+                &:last-of-type {
+                    .u-column {
+                        &::after {
                             position: absolute;
-                            left: -15px;
+                            right: -15px;
                             top: 16px;
                             content: "";
-                            width: 15px;
+                            width: 20px;
                             height: 1px;
                             background-color: @border-color;
                         }

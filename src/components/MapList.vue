@@ -55,9 +55,6 @@ export default {
         };
     },
     computed: {
-        per() {
-            return this.maps.length / this.base;
-        },
         mapList() {
             const list = [];
             let per = this.per;
@@ -67,11 +64,14 @@ export default {
             }
             return list;
         },
+        per() {
+            const len = this.maps.length;
+            return (len - (len % this.base)) / this.base;
+        },
     },
     watch: {
         activeIndex(index) {
-            const baseIndex = this.maps.length / this.base;
-            const refIndex = (index - 1) * baseIndex ? (index - 1) * baseIndex - 1 : 0;
+            const refIndex = index > 1 ? (index - 1) * this.per - 1 : (index - 1) * this.per;
             this.$refs.mapItem[refIndex].scrollIntoView({
                 behavior: "smooth",
                 block: refIndex ? "start" : "center",
