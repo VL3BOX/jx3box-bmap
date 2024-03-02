@@ -200,7 +200,10 @@ export default {
                     transform: scale(0.9);
                     white-space: nowrap;
                 }
-
+                .u-name:lang(vi) {
+                    white-space: inherit;
+                    text-align: center;
+                }
                 .u-gift {
                     width: 160px;
                     font-size: 20px;
